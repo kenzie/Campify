@@ -15,4 +15,10 @@ class Reservation < ActiveRecord::Base
     (departure_at.to_i - arrival_at.to_i)/(60*60*24)
   end
 
+  def available_campsites
+    campground.campsites.fitting(vehicle).reject do |site|
+      site.booked?(arrival_at,departure_at)
+    end
+  end
+
 end

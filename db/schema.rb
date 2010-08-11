@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20100810224657) do
   create_table "reservations", :force => true do |t|
     t.date     "arrival_at"
     t.date     "departure_at"
+    t.integer  "campground_id"
     t.integer  "campsite_id"
     t.integer  "vehicle_id"
     t.datetime "created_at"

@@ -2,6 +2,7 @@ class Campground < ActiveRecord::Base
 
   belongs_to :region
   has_many :campsites
+  has_many :reservations
 
   before_save :format_postal_code
 

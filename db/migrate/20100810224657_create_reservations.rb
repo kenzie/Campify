@@ -3,6 +3,7 @@ class CreateReservations < ActiveRecord::Migration
     create_table :reservations do |t|
       t.date :arrival_at
       t.date :departure_at
+      t.references :campground
       t.references :campsite
       t.references :vehicle
 

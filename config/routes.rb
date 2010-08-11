@@ -1,6 +1,9 @@
 Campify::Application.routes.draw do
 
-  root :to => "campground#index"
+  constraints(Subdomain) do
+    match '/' => 'campground/home#index'
+  end
+  root :to => "marketing/home#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

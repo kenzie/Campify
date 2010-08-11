@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(:version => 20100810224657) do
 
   create_table "campgrounds", :force => true do |t|
     t.string   "name"
+    t.string   "subdomain"
     t.string   "street"
     t.string   "town"
     t.string   "postal_code"

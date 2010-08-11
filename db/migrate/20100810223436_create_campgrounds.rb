@@ -2,6 +2,7 @@ class CreateCampgrounds < ActiveRecord::Migration
   def self.up
     create_table :campgrounds do |t|
       t.string :name
+      t.string :subdomain
       t.string :street
       t.string :town
       t.string :postal_code

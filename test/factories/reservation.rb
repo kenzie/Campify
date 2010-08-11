@@ -3,4 +3,5 @@ Factory.define :reservation do |f|
   f.departure_at 12.days.from_now
   f.association :campground
   f.association :vehicle
+  f.association :campsite
 end

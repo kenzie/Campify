@@ -23,4 +23,37 @@ class ReservationTest < ActiveSupport::TestCase
     assert !@res.available_campsites.include?(cs_nofit1)
   end
 
+  test "campsites is not booked" do
+    @res.arrival_at = 5.days.from_now
+    @res.departure_at = 6.days.from_now
+    cs = Factory.create(:campsite, :campground => @res.campground)
+    rs_before = Factory.create(:reservation, :campground => @res.campground, :campsite => cs, :arrival_at => 3.days.from_now, :departure_at => 4.days.from_now)
+    rs_after  = Factory.create(:reservation, :campground => @res.campground, :campsite => cs, :arrival_at => 7.days.from_now, :departure_at => 8.days.from_now)
+    assert @res.available_campsites.include?(cs)
+  end
+
+  test "campsites is booked (before to after)" do
+    @res.arrival_at = 5.days.from_now
+    @res.departure_at = 6.days.from_now
+    cs = Factory.create(:campsite, :campground => @res.campground)
+    rs_during = Factory.create(:reservation, :campground => @res.campground, :campsite => cs, :arrival_at => 3.days.from_now, :departure_at => 7.days.from_now)
+    assert !@res.available_campsites.include?(cs)
+  end
+
+  test "campsites is booked (before to middle)" do
+    @res.arrival_at = 5.days.from_now
+    @res.departure_at = 7.days.from_now
+    cs = Factory.create(:campsite, :campground => @res.campground)
+    rs_during = Factory.create(:reservation, :campground => @res.campground, :campsite => cs, :arrival_at => 3.days.from_now, :departure_at => 6.days.from_now)
+    assert !@res.available_campsites.include?(cs)
+  end
+
+  test "campsites is booked (middle to after)" do
+    @res.arrival_at = 5.days.from_now
+    @res.departure_at = 7.days.from_now
+    cs = Factory.create(:campsite, :campground => @res.campground)
+    rs_during = Factory.create(:reservation, :campground => @res.campground, :campsite => cs, :arrival_at => 6.days.from_now, :departure_at => 8.days.from_now)
+    assert !@res.available_campsites.include?(cs)
+  end
+
 end

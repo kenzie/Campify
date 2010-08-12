@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100810224657) do
+ActiveRecord::Schema.define(:version => 20100812193747) do
 
   create_table "campgrounds", :force => true do |t|
     t.string   "name"
@@ -32,6 +32,22 @@ ActiveRecord::Schema.define(:version => 20100810224657) do
     t.boolean  "water"
     t.boolean  "sewer"
     t.boolean  "cable"
+    t.integer  "campground_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "cottages", :force => true do |t|
+    t.integer  "bedrooms"
+    t.integer  "beds_king"
+    t.integer  "beds_queen"
+    t.integer  "beds_double"
+    t.integer  "beds_single"
+    t.integer  "beds_pullout"
+    t.float    "bathrooms"
+    t.boolean  "kitchen"
+    t.boolean  "satellite"
+    t.boolean  "air_conditioning"
     t.integer  "campground_id"
     t.datetime "created_at"
     t.datetime "updated_at"

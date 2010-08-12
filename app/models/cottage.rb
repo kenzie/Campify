@@ -1,7 +1,7 @@
 class Cottage < ActiveRecord::Base
 
   belongs_to :campground
-  has_many :reservations
+  has_many :reservations, :as => :bookable
 
   validates :campground, :presence => true
 

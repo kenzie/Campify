@@ -1,6 +1,6 @@
 class Vehicle < ActiveRecord::Base
 
-  has_many :reservations
+  has_many :reservations, :as => :bookee
 
   validates :length, :presence => true, :numericality => true
   validates :width, :presence => true, :numericality => true

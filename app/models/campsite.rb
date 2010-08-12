@@ -1,7 +1,7 @@
 class Campsite < ActiveRecord::Base
 
   belongs_to :campground
-  has_many :reservations
+  has_many :reservations, :as => :bookable
 
   validates :length, :presence => true, :numericality => true
   validates :width, :presence => true, :numericality => true

@@ -72,8 +72,10 @@ ActiveRecord::Schema.define(:version => 20100812193747) do
     t.date     "arrival_at"
     t.date     "departure_at"
     t.integer  "campground_id"
-    t.integer  "campsite_id"
-    t.integer  "vehicle_id"
+    t.integer  "bookable_id"
+    t.string   "bookable_type"
+    t.integer  "bookee_id"
+    t.string   "bookee_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

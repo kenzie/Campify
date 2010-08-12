@@ -1,12 +1,12 @@
 class Reservation < ActiveRecord::Base
 
   belongs_to :campground
-  belongs_to :campsite
-  belongs_to :vehicle
+  belongs_to :bookable, :polymorphic => true
+  belongs_to :bookee, :polymorphic => true
 
   validates :campground, :presence => true
-  validates :campsite, :presence => true
-  validates :vehicle, :presence => true
+  validates :bookable, :presence => true
+  # validates :bookee, :presence => true
   validates :arrival_at, :presence => true
   validates :departure_at, :presence => true
   # validate campsite isn't already reserved for dates
@@ -27,10 +27,23 @@ class Reservation < ActiveRecord::Base
 
   def available_campsites
     # find campsites that fit this vehicle
-    campground.campsites.fitting(vehicle).reject do |site|
+    campground.campsites.fitting(bookee).reject do |site|
       # reject campsite if it's already reserved during the requested dates
       Reservation.
-        where(:campsite_id => site.id).
+        where(:bookable_id => site.id).
+        where(:bookable_type => 'Campsite').
+        where('arrival_at < ? AND departure_at > ?', departure_at, arrival_at).
+        first
+    end
+  end
+
+  def available_cottages
+    # find all cottages
+    campground.cottages.all.reject do |cottage|
+      # reject cottages if it's already reserved during the requested dates
+      Reservation.
+        where(:bookable_id => cottage.id).
+        where(:bookable_type => 'Cottage').
         where('arrival_at < ? AND departure_at > ?', departure_at, arrival_at).
         first
     end

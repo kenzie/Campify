@@ -4,8 +4,8 @@ class CreateReservations < ActiveRecord::Migration
       t.date :arrival_at
       t.date :departure_at
       t.references :campground
-      t.references :campsite
-      t.references :vehicle
+      t.references :bookable, :polymorphic => true
+      t.references :bookee, :polymorphic => true
 
       t.timestamps
     end

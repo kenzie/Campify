@@ -9,7 +9,7 @@ class Reservation < ActiveRecord::Base
   # validates :bookee, :presence => true
   validates :arrival_at, :presence => true
   validates :departure_at, :presence => true
-  # validate campsite isn't already reserved for dates
+  # validates campsite isn't already reserved for dates
 
   def arrival_at=(arrival_at)
     # force arrival time to noon

@@ -27,26 +27,26 @@ class Reservation < ActiveRecord::Base
 
   def available_campsites
     # find campsites that fit this vehicle
-    campground.campsites.fitting(bookee).reject do |site|
+    campground.campsites.fitting(bookee).reject do |campsite|
       # reject campsite if it's already reserved during the requested dates
-      Reservation.
-        where(:bookable_id => site.id).
-        where(:bookable_type => 'Campsite').
-        where('arrival_at < ? AND departure_at > ?', departure_at, arrival_at).
-        first
+      booked?(campsite)
     end
   end
 
   def available_cottages
     # find all cottages
     campground.cottages.all.reject do |cottage|
-      # reject cottages if it's already reserved during the requested dates
-      Reservation.
-        where(:bookable_id => cottage.id).
-        where(:bookable_type => 'Cottage').
-        where('arrival_at < ? AND departure_at > ?', departure_at, arrival_at).
-        first
+      # reject cottage if it's already reserved during the requested dates
+      booked?(cottage)
     end
+  end
+
+  def booked?(bkbl)
+    Reservation.
+      where(:bookable_id => bkbl.id).
+      where(:bookable_type => bkbl.class.to_s).
+      where('arrival_at < ? AND departure_at > ?', departure_at, arrival_at).
+      first
   end
 
 end
